@@ -1,11 +1,17 @@
 const express = require('express')
-const app = express()
 const path = require('path')
+const bodyParser = require('body-parser')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+
+const app = express()
 
 const PORT = 3000
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
 
