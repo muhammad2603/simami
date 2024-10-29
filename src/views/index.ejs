@@ -4,10 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
+    <!-- Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <!-- Header Left -->
+            <div class="header__left">
+                <!-- Brands -->
+                <div class="brands">
+                    <!-- Figure Logo -->
+                    <figure>
+                        <img src="/images/logo/logo-simami.png" alt="Logo SiMAMI" />
+                    </figure>
+                    <!-- Akhir Figure Logo -->
+                </div>
+                <!-- Akhir Brands -->
+                <!-- Title -->
+                <div class="title">
+                    <h1>SiMAMI</h1>
+                </div>
+                <!-- Akhir Title -->
+            </div>
+            <!-- Akhir Header Left -->
 
-    <h1>Selamat datang di Home!</h1>
-    
+            <!-- Header Right -->
+            <div class="header__right">
+                <!-- Button Sign Up -->
+                <div class="header__right__btn-signup">
+                    <button>
+                        Sign Up
+                    </button>
+                </div>
+                <!-- Akhir Button Sign Up -->
+
+                <!-- Button Login -->
+                <div class="header__right__btn-login">
+                    <button>
+                        Login
+                    </button>
+                </div>
+                <!-- Akhir Button Login -->
+            </div>
+            <!-- Akhir Header Right -->
+        </header>
+        <!-- Akhir Header -->
+        <!-- Content -->
+        <div class="content">
+            <!-- Main -->
+            <main>
+                <!-- Aside Left -->
+                <aside class="content__main__left">
+                    <!-- Form Title -->
+                    <div class="form-title">
+                        <h2>Login to SiMAMI</h2>
+                    </div>
+                    <!-- Akhir Form Title -->
+                    <!-- Form Wrapper -->
+                    <div class="form-wrapper">
+                        <form method="post">
+                            <input type="text" id="username" class="username" placeholder="Enter Username" autocomplete="username" /> 
+                            <input type="password" id="password" class="password" placeholder="Enter Password" autocomplete="off" />
+                        </form>
+                        <p><a href="/forget-password"><b>Lupa Sandi?</b></a></p>
+                    </div>
+                    <!-- Akhir Form Wrapper -->
+                    <!-- Button Login Wrapper -->
+                    <div class="content__main__left__btn-login">
+                        <button class="btn btn-login" id="btnLogin">Log In</button>
+                    </div>
+                    <!-- Akhir Button Login Wrapper -->
+                    <!-- Link Sign Up -->
+                    <p class="text-sign-up">Belum mempunyai akun? Silahkan <a href="/sign-up">Daftar</a></p>
+                    <!-- Akhir Link Sign Up -->
+                </aside>
+                <!-- Akhir Aside Left -->
+                <!-- Aside Right -->
+                <aside class="content__main__right">
+                    <!-- Image Content -->
+                    <div class="content__main__right__image-content">
+                        <img src="/images/image-content.jpg" alt="Image Content SiMAMI">
+                    </div>
+                    <!-- Akhir Image Content -->
+                </aside>
+                <!-- Akhir Aside Right -->
+            </main>
+            <!-- Akhir Main -->
+            <!-- Footer -->
+            <footer>
+                <div class="footer__copy-dev-wrapper">
+                    <p>&copy; Copyright by Tim IT iSan. All Right Reserved.</p>
+                    <p>Designed by <span class="dev-name">Muhammad Fattahillah. Mz</span> and inspired by <a href="https://smarteyapps.com" target="_blank">smarteyapps.com</a></p>
+                </div>
+            </footer>
+            <!-- Akhir Footer -->
+        </div>
+        <!-- Akhir Content -->
+    </div>
+    <!-- Akhir Container -->
 </body>
 </html>
