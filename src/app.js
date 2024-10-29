@@ -15,10 +15,16 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
 
-    res.render('index', { title: "Home SiMAMI" })
+    res.render('index', { title: "Login SiMAMI" })
     
+})
+
+app.get('/sign-up', (req, res) => {
+
+    res.render('signup', { title: "Sign Up SiMAMI" })
+
 })
 
 app.listen(PORT, () => {

@@ -84,21 +84,21 @@ header .header__right button {
     transition: .3s ease;
 }
 
-header .header__right .header__right__btn-signup button {
+header .header__right button.inactive {
     color: var(--secondary-color);
 }
 
-header .header__right .header__right__btn-signup button:hover {
+header .header__right button.inactive:hover {
     border-color: var(--hover-color);
     color: var(--hover-color);
 }
 
-header .header__right .header__right__btn-login button {
+header .header__right button.active {
     background-color: var(--secondary-color) !important;
     color: white;
 }
 
-header .header__right .header__right__btn-login button:hover {
+header .header__right button.active:hover {
     background-color: var(--hover-color) !important;
     border-color: var(--hover-color);
 }
