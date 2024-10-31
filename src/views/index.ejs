@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Akhir JQuery -->
+    <!-- Script Functs -->
+    <script src="/js/functs.js"></script>
+    <!-- Akhir Script Functs -->
+    <!-- Script Login -->
+    <script src="/js/login.js"></script>
+    <!-- Akhir Script Login -->
     <!-- Container -->
     <div class="container">
         <!-- Header -->
@@ -34,7 +43,7 @@
             <div class="header__right">
                 <!-- Button Sign Up -->
                 <div class="header__right__btn-signup">
-                    <button class="inactive">
+                    <button class="inactive" id="btnLinkSignUp">
                         Sign Up
                     </button>
                 </div>
@@ -42,7 +51,7 @@
 
                 <!-- Button Login -->
                 <div class="header__right__btn-login">
-                    <button class="active">
+                    <button class="active" id="btnLinkLogin">
                         Login
                     </button>
                 </div>
@@ -71,9 +80,12 @@
                         <p><a href="/forget-password"><b>Lupa Sandi?</b></a></p>
                     </div>
                     <!-- Akhir Form Wrapper -->
+                    <!-- Pesan Error ketika Login -->
+                    <p class="error-login" id="errorLogin"></p>
+                    <!-- Akhir Pesan Error ketika Login -->
                     <!-- Button Login Wrapper -->
                     <div class="content__main__left__btn-login">
-                        <button class="btn btn-login" id="btnLogin">Log In</button>
+                        <button class="btn btn-login" id="btnLogin" type="submit">Log In</button>
                     </div>
                     <!-- Akhir Button Login Wrapper -->
                     <!-- Link Sign Up -->
