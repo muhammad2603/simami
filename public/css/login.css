@@ -7,6 +7,7 @@
     --input-hover-content: #9ca3af;
     --link-color: #3b82f6;
     --link-hover: #60a5fa;
+    --error-color: #ef4444;
 }
 
 * {
@@ -155,10 +156,6 @@ div.content main {
     outline: 1.8px solid var(--input-hover-content);
 }
 
-.content__main__left .form-wrapper p {
-    text-align: right;
-}
-
 .content__main__left .form-wrapper p a {
     font-size: .9rem;
     color: black;
@@ -167,6 +164,17 @@ div.content main {
 
 .content__main__left .form-wrapper p a:hover {
     color: rgba(0,0,0,.6);
+}
+
+.content__main__left .form-wrapper p:has(a) {
+    text-align: right;
+}
+
+.content__main__left .error-login {
+    color: var(--error-color);
+    font-weight: lighter;
+    font-size: .85rem;
+    margin-block-start: 1rem;
 }
 
 .content__main__left__btn-login {
@@ -233,4 +241,89 @@ div.content main {
 .content footer p a {
     text-decoration: none;
     color: black;
+}
+
+@media screen and (max-width: 767px) {
+
+    header {
+        padding: .6rem 1.2rem;
+    }
+
+    header .header__left .brands {
+        width: 40%;
+    }
+
+    header .header__left .title h1 {
+        font-size: 1.2rem;
+    }
+
+    header .header__right {
+        gap: 12px;
+    }
+
+    header .header__right button {
+        width: 5.5rem;
+        font-size: .8rem !important;
+    }
+
+    div.content {
+        justify-content: space-between !important;
+    }
+
+    .content footer {
+        width: 90%;
+        margin-inline: auto;
+    }
+    
+}
+
+@media screen and (max-width: 1023px) {
+
+    div.content {
+        justify-content: unset;
+    }
+
+    div.content main {
+        justify-content: center;
+        margin: 6rem auto;
+        padding-top: initial;
+    }
+
+    .content__main__left {
+        margin-inline-start: initial;
+    }
+
+    .content__main__right {
+        display: none;
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    div.content main {
+        padding-top: initial;
+    }
+
+    .content__main__right {
+        flex: 1;
+    }
+
+    .content__main__right__image-content {
+        width: 76%;
+        margin-inline: auto;
+    }
+
+}
+
+@media screen and (min-width: 1440px) {
+
+    .content__main__left {
+        flex-basis: 23rem;
+    }
+
+    .content__main__right__image-content {
+        width: 60%;
+    }
+
 }
