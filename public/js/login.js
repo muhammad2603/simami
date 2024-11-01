@@ -1,7 +1,8 @@
 $(() => {
     // Variable Button Login
     const btnLogin = $('#btnLogin'),
-          errorLogin = $("#errorLogin")
+          errorLogin = $("#errorLogin"),
+          checkToken = localStorage.getItem('token')
     // Counter Login
     let waitingForNextLogin = 0
     // Button Link Sign Up Clicked
@@ -28,7 +29,24 @@ $(() => {
             // If Error Login Message Exist, setErrorLoginMessage
             if( errorLogin.text() ) setErrorLoginMessage(errorLogin, '')
             // Message from Response (Object)
-            const { message } = resp
+            const { message, token } = resp
+            // If token doesn't exist in Local Storage
+            if( !checkToken ) {
+                // Get token from response server, and create token on Local Storage
+                localStorage.setItem('token', token)
+            }
+
+            $.ajax({
+                url: '/dashboard',
+                type: "GET",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                success: function() {
+                    window.location.href = '/dashboard'
+                }
+            })
+
             // Set Text on Button Login
             btnLogin.text(`✔️ ${message}`)
         }catch(err) {

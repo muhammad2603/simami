@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const jwt = require('jsonwebtoken')
@@ -5,10 +6,13 @@ const bcrypt = require('bcryptjs')
 const mysql = require('mysql2')
 const xss = require('xss')
 const helmet = require('helmet')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
-const PORT = 3000
+const PORT = process.env.PORT
+// Get Secret Key from ENV
+const secretKey = process.env.SECRET_KEY
 
 app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.json())
@@ -17,16 +21,17 @@ app.use(
     helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js", "http://192.168.100.167:3000"],
-            styleSrc: ["'self'", "http://192.168.100.167:3000"],
-            imgSrc: ["'self'", "http://192.168.100.167:3000"],
-            connectSrc: ["'self'", "http://localhost:3000/sign-up"],
+            scriptSrc: ["'self'", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js", "http://192.168.100.167"],
+            styleSrc: ["'self'", "http://192.168.100.167"],
+            imgSrc: ["'self'", "http://192.168.100.167"],
+            connectSrc: ["'self'"],
             fontSrc: ["'self'", "https:"],
             objectSrc: ["'none'"],
             upgradeInsecureRequests: []
         }
     })
 )
+app.use(cookieParser())
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -39,6 +44,7 @@ const pool = mysql.createPool({
     database: 'simami',
     connectionLimit: 10
 })
+
 pool.getConnection((err) => {
 
     if( err ) return console.error("Error while connect to DB:", err)
@@ -71,6 +77,33 @@ const verifyHash = async (res, stringPass, hashPass) => {
     }
 }
 
+const generateTokenJwt = (payload) => {
+    // Return generate Token
+    return jwt.sign(payload, secretKey, { expiresIn: '1h' })
+}
+
+const verifyTokenJwt = (req, res, next) => {
+
+    const tokenJwt = req.cookies.token || req.headers['authorization']?.split(' ')[1]
+
+    if( !tokenJwt ) {
+        return res.redirect('/')
+    }
+
+    jwt.verify(tokenJwt, secretKey, (err, decoded) => {
+
+        if( err ) {
+            return res.redirect('/')
+        }
+
+        req.user = decoded
+
+        next()
+        
+    })
+
+}
+
 app.get('/', (req, res) => {
     // Return with rendered page on file index.ejs
     return res.render('index', { title: "Login SiMAMI" })
@@ -95,7 +128,7 @@ app.post('/login', async (req, res) => {
         pool.query(sql, [username], async (err, result) => {
 
             if( err ) throw new Error("Ada kesalahan saat pengambilan data!")
-
+            
             const hashPass = result[0]?.password
 
             if( !hashPass ) return res.status(404).json({
@@ -105,8 +138,20 @@ app.post('/login', async (req, res) => {
 
             await verifyHash(res, password, hashPass)
 
+            const token = generateTokenJwt({
+                username: username
+            })
+
+            res.cookie('token', token, {
+                maxAge: 1 * 60 * 60 * 1000,
+                httpOnly: true,
+                secure: true,
+                sameSite: 'strict'
+            })
+
             return res.status(200).json({
                 message: "Login Berhasil!",
+                token: token,
                 status: 200
             })
         })
@@ -183,6 +228,10 @@ app.post('/sign-up', async (req, res) => {
             status: 400
         })
     }
+})
+
+app.get('/dashboard', verifyTokenJwt, (req, res) => {
+    res.render('dashboard', { username: req.user.username })
 })
 
 app.listen(PORT, () => {

@@ -1,13 +1,14 @@
 // Function Request AJAX
 function requestAjax(config) {
     // Get property object from config
-    const { url, type, contentType, processData, data } = config
+    const { url, type, headers, contentType, processData, data } = config
     // Return Promise with Resolved or Rejected
     return new Promise((resolve, reject) => {
         // AJAX
         $.ajax({
             url: url,
             type: type,
+            headers: headers,
             contentType: contentType,
             processData: processData,
             data: data,
