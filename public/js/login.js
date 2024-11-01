@@ -35,7 +35,7 @@ $(() => {
                 // Get token from response server, and create token on Local Storage
                 localStorage.setItem('token', token)
             }
-
+            // Request to endpoint /dashboard, if authenticate or valid token, redirect to dashboard
             $.ajax({
                 url: '/dashboard',
                 type: "GET",
@@ -46,7 +46,6 @@ $(() => {
                     window.location.href = '/dashboard'
                 }
             })
-
             // Set Text on Button Login
             btnLogin.text(`✔️ ${message}`)
         }catch(err) {

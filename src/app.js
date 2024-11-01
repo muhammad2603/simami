@@ -123,13 +123,14 @@ app.post('/login', async (req, res) => {
             status: 400
         })
         // SQL Command for selecting password by username
-        sql = "SELECT password FROM login WHERE username=?"
+        sql = "SELECT password, role FROM login WHERE username=?"
         // Make first pool query: Getting password for user
         pool.query(sql, [username], async (err, result) => {
             // If error, throw error
             if( err ) throw new Error("Ada kesalahan saat pengambilan data!")
             // Get hash password user from database
-            const hashPass = result[0]?.password
+            const hashPass = result[0]?.password,
+                  role = result[0]?.role
             // If hash password is not finded on database, return error with status 404 (Not Found) and message
             if( !hashPass ) return res.status(404).json({
                 message: "Pengguna tidak ditemukan.",
@@ -139,7 +140,8 @@ app.post('/login', async (req, res) => {
             await verifyHash(res, password, hashPass)
             // Generate token JWT with payload
             const token = generateTokenJwt({
-                username: username
+                username: username,
+                role: role
             })
             // Make Cookie for "remember me" and set max-age expires for 1 hour
             res.cookie('token', token, {
@@ -237,8 +239,12 @@ app.post('/sign-up', async (req, res) => {
 })
 
 app.get('/dashboard', verifyTokenJwt, (req, res) => {
-    // Render Dashboard Page
-    res.render('dashboard', { username: req.user.username })
+    // Get username and role from user inside Request Body object
+    const { username, role } = req.user
+    // If role is user, Render User Dashboard Page
+    if( role === 'user' ) return res.render('dashboard/user/user', { username: username })
+    // If role is admin, Render Admin Dashboard Page
+    return res.render('dashboard/admin/admin', { username: username })
 })
 
 app.listen(PORT, () => {
